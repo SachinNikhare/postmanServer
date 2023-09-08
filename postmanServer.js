@@ -15,154 +15,149 @@ app.use(function (req, res, next) {
 });
 const port = process.env.PORT || 2410;
 app.listen(port, () => console.log(`Node app listening on port ${port}!`));
-
-// let baseURL = "https://repo-8qu2.onrender.com/productServer";
 let axios = require("axios");
 
 app.post("/fetch", function (req, res) {
-  let { method, fetchURL, data, headerKey1,headerKey2,headerKey3,headerValue1,headerValue2,headerValue3 } = req.body;
-  // console.log("METHOD", method);
-  // console.log("fetchURL", fetchURL);
-  // console.log("data", data);
+  let {
+    method,
+    fetchURL,
+    data,
+    headerKey1,
+    headerKey2,
+    headerKey3,
+    headerValue1,
+    headerValue2,
+    headerValue3,
+  } = req.body;
+  let headerJson = {};
+  if (headerKey1 && headerValue1) {
+    headerJson = { ...headerJson, [headerKey1]: headerValue1 };
+  }
+  if (headerKey2 && headerValue2) {
+    headerJson = { ...headerJson, [headerKey2]: headerValue2 };
+  }
+  if (headerKey3 && headerValue3) {
+    headerJson = { ...headerJson, [headerKey3]: headerValue3 };
+  }
   if (method === "GET") {
-    if(headerKey1||headerKey2||headerKey3){
+    if (headerKey1 || headerKey2 || headerKey3) {
       axios
-      .get(fetchURL,{headers:{[headerKey1]:headerValue1,[headerKey2]:headerValue2,[headerKey3]:headerValue3}})
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          // console.log(status, statusText);
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });  
-    }
-    else{
+        .get(fetchURL, { headers: headerJson })
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
+    } else {
       axios
-      .get(fetchURL)
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          // console.log(status, statusText);
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });
+        .get(fetchURL)
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
     }
-    
   } else if (method == "POST") {
-    if(headerKey1||headerKey2||headerKey3){
+    if (headerKey1 || headerKey2 || headerKey3) {
       axios
-      .post(fetchURL, data,{headers:{[headerKey1]:headerValue1,[headerKey2]:headerValue2,[headerKey3]:headerValue3}})
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          // console.log(status, statusText);
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });
-    }
-    else{
+        .post(fetchURL, data, { headers: headerJson })
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
+    } else {
       axios
-      .post(fetchURL, data)
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          // console.log(status, statusText);
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });
+        .post(fetchURL, data)
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
     }
-    
   } else if (method == "PUT") {
-    if(headerKey1||headerKey2||headerKey3){
+    if (headerKey1 || headerKey2 || headerKey3) {
       axios
-      .put(fetchURL, data)
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });
-    }
-    else{
+        .put(fetchURL, data)
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
+    } else {
       axios
-      .put(fetchURL, data,{headers:{[headerKey1]:headerValue1,[headerKey2]:headerValue2,[headerKey3]:headerValue3}})
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });
+        .put(fetchURL, data, { headers: headerJson })
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
     }
-    
   } else {
-    if(headerKey1||headerKey2||headerKey3){
+    if (headerKey1 || headerKey2 || headerKey3) {
       axios
-      .delete(fetchURL,{headers:{[headerKey1]:headerValue1,[headerKey2]:headerValue2,[headerKey3]:headerValue3}})
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });  
-    }
-    else{
+        .delete(fetchURL, { headers: headerJson })
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
+    } else {
       axios
-      .delete(fetchURL)
-      .then(function (response) {
-        console.log(response.data);
-        res.send(response.data);
-      })
-      .catch(function (err) {
-        if (err.response) {
-          let { status, statusText } = err.response;
-          res.status(status).send(statusText);
-        } else {
-          res.status(401).send(err);
-        }
-      });    
+        .delete(fetchURL)
+        .then(function (response) {
+          res.send(JSON.stringify(response.data));
+        })
+        .catch(function (err) {
+          if (err.response) {
+            let { status, statusText } = err.response;
+            res.status(status).send(statusText);
+          } else {
+            res.status(401).send(err);
+          }
+        });
     }
-    
   }
 });
