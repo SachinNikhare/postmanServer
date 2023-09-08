@@ -70,6 +70,7 @@ app.post("/fetch", function (req, res) {
         });
     }
   } else if (method == "POST") {
+    data = JSON.parse(data);
     if (headerKey1 || headerKey2 || headerKey3) {
       axios
         .post(fetchURL, data, { headers: headerJson })
@@ -88,7 +89,7 @@ app.post("/fetch", function (req, res) {
       axios
         .post(fetchURL, data)
         .then(function (response) {
-          res.send(JSON.stringify(response.data));
+          res.send(response.data);
         })
         .catch(function (err) {
           if (err.response) {
@@ -100,6 +101,7 @@ app.post("/fetch", function (req, res) {
         });
     }
   } else if (method == "PUT") {
+    data = JSON.parse(data);
     if (headerKey1 || headerKey2 || headerKey3) {
       axios
         .put(fetchURL, data)
